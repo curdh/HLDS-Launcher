@@ -1,0 +1,35 @@
+﻿<Window x:Class="HLDS_Launcher.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:HLDS_Launcher"
+        mc:Ignorable="d"
+        Title="HLDS Launcher" Height="400" Width="342" ResizeMode="CanMinimize" WindowStartupLocation="CenterScreen" Icon="Images/launcher_1F4_icon.ico">
+    <Grid Background="#FF495743">
+        <ComboBox x:Name="gameList" HorizontalAlignment="Left" Margin="113,13,0,0" VerticalAlignment="Top" Width="205" FontSize="14" SelectionChanged="GameList_SelectionChanged" SelectedIndex="0"/>
+        <TextBlock HorizontalAlignment="Left" Margin="13,13,0,0" TextWrapping="Wrap" Text="Game" VerticalAlignment="Top" Height="22" Width="95" TextAlignment="Right" FontSize="16" Foreground="#FFDEDEDE"/>
+        <ComboBox x:Name="mapsList" HorizontalAlignment="Left" Margin="113,52,0,0" VerticalAlignment="Top" Width="205" FontSize="14"/>
+        <TextBlock HorizontalAlignment="Left" Margin="13,52,0,0" TextWrapping="Wrap" Text="Map" VerticalAlignment="Top" Height="22" Width="95" TextAlignment="Right" FontSize="16" Foreground="#FFDEDEDE"/>
+        <TextBlock HorizontalAlignment="Left" Margin="13,91,0,0" TextWrapping="Wrap" Text="Max Players" VerticalAlignment="Top" Height="22" Width="95" TextAlignment="Right" FontSize="16" Foreground="#FFDEDEDE"/>
+        <TextBox x:Name="maxPlayers" HorizontalAlignment="Left" Height="22" Margin="113,91,0,0" Text="32" VerticalAlignment="Top" Width="48" FontSize="14" MaxLength="2" MaxLines="1" PreviewKeyDown="TextOnlyNumbers" PreviewTextInput="TextInputOnlyNumbers" TextChanged="MaxPlayers_TextChanged"/>
+        <TextBlock HorizontalAlignment="Left" Margin="13,127,0,0" TextWrapping="Wrap" Text="UDP Port" VerticalAlignment="Top" Height="22" Width="95" TextAlignment="Right" FontSize="16" Foreground="#FFDEDEDE"/>
+        <TextBox x:Name="port" HorizontalAlignment="Left" Height="22" Margin="113,127,0,0" Text="27015" VerticalAlignment="Top" Width="48" FontSize="14" MaxLength="5" MaxLines="1" PreviewKeyDown="TextOnlyNumbers" PreviewTextInput="TextInputOnlyNumbers"/>
+        <CheckBox x:Name="secureVAC" Content="Enable VAC (Valve Anti-Cheat)" HorizontalAlignment="Left" Margin="113,206,0,0" VerticalAlignment="Top" FontSize="14" Foreground="#FFDEDEDE" IsChecked="True"/>
+        <Button x:Name="buttonStart" Content="Start" HorizontalAlignment="Left" Margin="113,335,0,0" VerticalAlignment="Top" Width="75" FontSize="14" Click="ButtonStart_Click"/>
+        <Button x:Name="buttonExit" Content="Exit" HorizontalAlignment="Left" Margin="214,335,0,0" VerticalAlignment="Top" Width="75" FontSize="14" Click="ButtonExit_Click"/>
+        <Button x:Name="buttonEditServerCFG" Content="Edit Server.cfg" HorizontalAlignment="Left" Margin="188,235,0,0" VerticalAlignment="Top" Width="101" FontSize="14" Click="ButtonEditServerCFG_Click"/>
+        <Button x:Name="buttonGetIP" Content="Get public IP" HorizontalAlignment="Left" Margin="60,235,0,0" VerticalAlignment="Top" Width="101" FontSize="14" Click="ButtonGetIP_Click"/>
+        <CheckBox x:Name="autoRestart" Content="Restart server after exit/crash." HorizontalAlignment="Left" Margin="113,273,0,0" VerticalAlignment="Top" FontSize="14" Foreground="#FFDEDEDE" Checked="AutoRestart_Checked" Unchecked="AutoRestart_Checked"/>
+        <Button x:Name="buttonStop" Content="Stop" HorizontalAlignment="Left" Margin="113,335,0,0" VerticalAlignment="Top" Width="75" FontSize="14" Click="ButtonStop_Click" IsEnabled="False" Visibility="Hidden"/>
+        <ComboBox x:Name="priorityList" HorizontalAlignment="Left" Margin="113,163,0,0" VerticalAlignment="Top" Width="124" FontSize="14" SelectionChanged="GameList_SelectionChanged" SelectedIndex="0">
+            <ComboBoxItem Content="Normal"/>
+            <ComboBoxItem Content="Above Normal"/>
+            <ComboBoxItem Content="High"/>
+            <ComboBoxItem Content="Realtime"/>
+        </ComboBox>
+        <TextBlock HorizontalAlignment="Left" Margin="13,163,0,0" TextWrapping="Wrap" Text="Priority" VerticalAlignment="Top" Height="22" Width="95" TextAlignment="Right" FontSize="16" Foreground="#FFDEDEDE"/>
+        <CheckBox x:Name="enableLog" Content="Enable Launcher Logging" HorizontalAlignment="Left" Margin="139,301,0,0" VerticalAlignment="Top" FontSize="14" Foreground="#FFDEDEDE"/>
+
+    </Grid>
+</Window>
