@@ -180,6 +180,7 @@ namespace HLDS_Launcher
             port.IsEnabled = true;
             secureVAC.IsEnabled = true;
             autoRestart.IsEnabled = true;
+            enableLog.IsEnabled = (bool)autoRestart.IsChecked;
 
             buttonStart.IsEnabled = true;
             buttonStart.Visibility = Visibility.Visible;
@@ -338,6 +339,7 @@ namespace HLDS_Launcher
                 port.IsEnabled = false;
                 secureVAC.IsEnabled = false;
                 autoRestart.IsEnabled = false;
+                enableLog.IsEnabled = false;
 
                 buttonStart.IsEnabled = false;
                 buttonStart.Visibility = Visibility.Hidden;
