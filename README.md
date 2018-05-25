@@ -5,6 +5,8 @@ This launcher is aimed to make running a dedicated server easier and at the best
 
 # Features
 - Auto detect most (if not all) mods installed to half-life (See list of tested mods).
+- Select random map.
+- Option to choose server process priority.
 - Check the current public IP of the hosting machine.
 - Open the server.cfg file for easy and quick edition.
 - Restart server after exit/crash automatically with option to log events.
