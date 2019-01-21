@@ -53,6 +53,7 @@ namespace HLDS_Launcher
             maxPlayers.Text = Properties.Settings.Default.maxPlayers;
             port.Text = Properties.Settings.Default.port;
             priorityList.SelectedIndex = Properties.Settings.Default.priorityIndex;
+            randomMapcycle.IsChecked = Properties.Settings.Default.randomMapcycle;
             secureVAC.IsChecked = Properties.Settings.Default.vac;
             autoRestart.IsChecked = Properties.Settings.Default.autoRestart;
             enableLog.IsChecked = Properties.Settings.Default.enableLogging;
@@ -68,6 +69,7 @@ namespace HLDS_Launcher
             Properties.Settings.Default.maxPlayers = maxPlayers.Text;
             Properties.Settings.Default.port = port.Text;
             Properties.Settings.Default.priorityIndex = priorityList.SelectedIndex;
+            Properties.Settings.Default.randomMapcycle = (bool)randomMapcycle.IsChecked;
             Properties.Settings.Default.vac = (bool)secureVAC.IsChecked;
             Properties.Settings.Default.autoRestart = (bool)autoRestart.IsChecked;
             Properties.Settings.Default.enableLogging = (bool)enableLog.IsChecked;
@@ -155,6 +157,25 @@ namespace HLDS_Launcher
             games.Add(game);
             gameNames.Add(game.Name);
             gameFolders.Add(game.ShortName);
+        }
+
+        // Randomize mapcycle.
+        private void RandomMapCycle()
+        {
+            List<string> mapList = new List<string>();
+            Random random = new Random();
+
+            mapList.AddRange(games[gameList.SelectedIndex].Maps);
+            mapList.RemoveAt(0);
+            StreamWriter sw = new StreamWriter(".\\" + games[gameList.SelectedIndex].ShortName + "\\mapcycle.txt");
+
+            while (mapList.Count > 0)
+            {
+                int i = random.Next(0, mapList.Count);
+                sw.WriteLine(mapList[i]);
+                mapList.RemoveAt(i);
+            }
+            sw.Close();
         }
 
         // Start hlds.exe
@@ -316,6 +337,11 @@ namespace HLDS_Launcher
                 case 3:
                     priority = ProcessPriorityClass.RealTime;
                     break;
+            }
+            // Random Mapcycle
+            if (randomMapcycle.IsChecked == true)
+            {
+                RandomMapCycle();
             }
             // Check if Launcher should write to log.
             if (autoRestart.IsChecked == true && enableLog.IsChecked == true)
