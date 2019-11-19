@@ -130,5 +130,29 @@ namespace HLDS_Launcher.Properties {
                 this["randomMapcycle"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool bots {
+            get {
+                return ((bool)(this["bots"]));
+            }
+            set {
+                this["bots"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string localIP {
+            get {
+                return ((string)(this["localIP"]));
+            }
+            set {
+                this["localIP"] = value;
+            }
+        }
     }
 }

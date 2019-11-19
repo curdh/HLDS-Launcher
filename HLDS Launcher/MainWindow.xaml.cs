@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
+using System.Net;
 using System.Text.RegularExpressions;
 using System.Windows;
 using System.Windows.Controls;
@@ -9,15 +10,39 @@ using System.Windows.Input;
 
 namespace HLDS_Launcher
 {
+    /*
+     * TODO: populate mapcycle.txt with all maps on /maps folder automatically (using a button or something).
+     * TODO: add advanced settings tab.
+     * TODO: ADVANCED SETTINGS = change most common cvars from server.cfg within UI.
+     * TODO: option to add more command line parameters.
+     * 
+     * v1.2
+     * - Added bots support for ReGame.dll (Only CS 1.6).
+     * - Added option to set server IP address.
+     * - Added button to edit mapcycle file.
+     * - Show public ip directly on application instead of redirecting to website.
+     * - Improved launcher log to detect if server crashed/closed unexpectedly.
+     * - Now server doesn't restart automatically when the user stops it.
+     * - Random mapcycle now creates a new file named mapcycle_random.txt and use it for map rotation.
+     * 
+     * v1.1
+     * - Added option to randomize mapcycle.
+     * 
+     * v1.0
+     * - Initial release.
+     */
+
     public partial class MainWindow : Window
     {
         string _game;
+        string _mapcyclefile;
         string _map;
         string _maxPlayers;
+        string _localIP;
         string _port;
         string _vac;
+        string _bots;
 
-        bool stopServer = false;
         bool writeLog = false;
 
         List<Scripts.Game> games = new List<Scripts.Game>();
@@ -27,12 +52,17 @@ namespace HLDS_Launcher
         Process hlds;
         ProcessPriorityClass priority;
 
+        System.Net.WebClient webClient;
+
         public MainWindow()
         {
             CheckEXE();
             InitializeComponent();
             LoadGames();
             LoadUserValues();
+
+            webClient = new System.Net.WebClient();
+            GetPublicIP();
         }
 
         // Check if HLDS.exe exists in the same folder.
@@ -51,14 +81,15 @@ namespace HLDS_Launcher
         {
             gameList.SelectedIndex = Properties.Settings.Default.gameNameIndex;
             maxPlayers.Text = Properties.Settings.Default.maxPlayers;
+            localip_TextBox.Text = Properties.Settings.Default.localIP;
             port.Text = Properties.Settings.Default.port;
             priorityList.SelectedIndex = Properties.Settings.Default.priorityIndex;
             randomMapcycle.IsChecked = Properties.Settings.Default.randomMapcycle;
             secureVAC.IsChecked = Properties.Settings.Default.vac;
+            enableBots.IsChecked = Properties.Settings.Default.bots;
             autoRestart.IsChecked = Properties.Settings.Default.autoRestart;
             enableLog.IsChecked = Properties.Settings.Default.enableLogging;
             mapsList.SelectedIndex = Properties.Settings.Default.gameMapIndex;
-            enableLog.IsEnabled = (bool)autoRestart.IsChecked;
         }
 
         // Save user settings.
@@ -67,10 +98,12 @@ namespace HLDS_Launcher
             Properties.Settings.Default.gameNameIndex = gameList.SelectedIndex;
             Properties.Settings.Default.gameMapIndex = mapsList.SelectedIndex;
             Properties.Settings.Default.maxPlayers = maxPlayers.Text;
+            Properties.Settings.Default.localIP = localip_TextBox.Text;
             Properties.Settings.Default.port = port.Text;
             Properties.Settings.Default.priorityIndex = priorityList.SelectedIndex;
             Properties.Settings.Default.randomMapcycle = (bool)randomMapcycle.IsChecked;
             Properties.Settings.Default.vac = (bool)secureVAC.IsChecked;
+            Properties.Settings.Default.bots = (bool)enableBots.IsChecked;
             Properties.Settings.Default.autoRestart = (bool)autoRestart.IsChecked;
             Properties.Settings.Default.enableLogging = (bool)enableLog.IsChecked;
             Properties.Settings.Default.Save();
@@ -162,12 +195,20 @@ namespace HLDS_Launcher
         // Randomize mapcycle.
         private void RandomMapCycle()
         {
+            if (gameList.Items.Count <= 1)
+            {
+                return;
+            }
             List<string> mapList = new List<string>();
             Random random = new Random();
 
             mapList.AddRange(games[gameList.SelectedIndex].Maps);
             mapList.RemoveAt(0);
-            StreamWriter sw = new StreamWriter(".\\" + games[gameList.SelectedIndex].ShortName + "\\mapcycle.txt");
+            StreamWriter sw = new StreamWriter(".\\" + games[gameList.SelectedIndex].ShortName + "\\mapcycle_random.txt");
+
+            string mapName = _map.Remove(0, 6);
+            sw.WriteLine(mapName);
+            mapList.Remove(mapName);
 
             while (mapList.Count > 0)
             {
@@ -176,6 +217,7 @@ namespace HLDS_Launcher
                 mapList.RemoveAt(i);
             }
             sw.Close();
+            _mapcyclefile = " +mapcyclefile mapcycle_random.txt ";
         }
 
         // Start hlds.exe
@@ -183,26 +225,29 @@ namespace HLDS_Launcher
         {
             hlds = new Process();
             hlds.StartInfo.FileName = "hlds.exe";
-            hlds.StartInfo.Arguments = "-console" + _game + _maxPlayers + _port + _vac + _map;
+            hlds.StartInfo.Arguments = "-console" + _game + _maxPlayers + _localIP + _port + _vac + _mapcyclefile + _map + _bots;
             hlds.EnableRaisingEvents = true;
             hlds.Exited += new EventHandler(Hlds_Exited);
             hlds.Start();
             hlds.PriorityClass = priority;
-            WriteToLog("Server started.");
+            WriteToLog("Server started with parameters: " + hlds.StartInfo.Arguments);
         }
 
         // Stop server and restore UI.
         private void StopServer()
         {
-            stopServer = true;
             gameList.IsEnabled = true;
             mapsList.IsEnabled = true;
             maxPlayers.IsEnabled = true;
             port.IsEnabled = true;
             secureVAC.IsEnabled = true;
+            enableBots.IsEnabled = true;
             autoRestart.IsEnabled = true;
-            enableLog.IsEnabled = (bool)autoRestart.IsChecked;
-
+            enableLog.IsEnabled = true;
+            randomMapcycle.IsEnabled = true;
+            localip_TextBox.IsEnabled = true;
+            priorityList.IsEnabled = true;
+            
             buttonStart.IsEnabled = true;
             buttonStart.Visibility = Visibility.Visible;
 
@@ -216,14 +261,25 @@ namespace HLDS_Launcher
             Application.Current.Shutdown();
         }
 
-        // HLDS exit event handler. Restart server if process exited.
+        // HLDS exit event handler.
         private void Hlds_Exited(object sender, EventArgs e)
         {
-            if (stopServer == false)
+            Dispatcher.BeginInvoke(new Action(delegate
             {
-                WriteToLog("Server exited or crash. Restarting server..");
-                StartHLDS();
-            }
+                if (hlds.ExitCode != 0)
+                {
+                    WriteToLog("Server process ended unexpectedly. Game: " + games[gameList.SelectedIndex].ShortName);
+
+                    if (autoRestart.IsChecked == true)
+                    {
+                        WriteToLog("Restarting server...");
+                        StartHLDS();
+                        return;
+                    }
+                }
+                StopServer();
+            }), System.Windows.Threading.DispatcherPriority.ApplicationIdle, null);
+            
         }
 
         private void WriteToLog(string line)
@@ -267,19 +323,43 @@ namespace HLDS_Launcher
             {
                 mapsList.ItemsSource = games[gameList.SelectedIndex].Maps;
                 mapsList.SelectedIndex = 0;
+
+                if (games[gameList.SelectedIndex].ShortName == "cstrike")
+                {
+                    enableBots.IsEnabled = true;
+                }
+                else
+                {
+                    enableBots.IsEnabled = false;
+                }
             }            
         }
 
-        // Auto-restart/Enable Logging checkbox states.
-        private void AutoRestart_Checked(object sender, RoutedEventArgs e)
+        // Get public IP from ipify.org.
+        private void GetPublicIP()
         {
-            enableLog.IsEnabled = (bool)autoRestart.IsChecked;
+            publicIP_Text.Text = "...";
+            webClient.DownloadStringCompleted += new DownloadStringCompletedEventHandler(PublicIP_DownloadStringCompleted);
+            webClient.DownloadStringAsync(new Uri("https://api.ipify.org"));
         }
 
-        // Button public IP.
         private void ButtonGetIP_Click(object sender, RoutedEventArgs e)
         {
-            Process.Start("http://ipv4.whatismyv6.com/");
+            buttonGetIP.IsEnabled = false;
+            GetPublicIP();
+        }
+
+        private void PublicIP_DownloadStringCompleted(object sender, DownloadStringCompletedEventArgs e)
+        {
+            if (e.Error != null)
+            {
+                publicIP_Text.Text = "Failed";
+            }
+            else
+            {
+                publicIP_Text.Text = e.Result;
+            }
+            buttonGetIP.IsEnabled = true;
         }
 
         // Button edit server.cfg.
@@ -300,12 +380,13 @@ namespace HLDS_Launcher
         // Button Start Server
         private void ButtonStart_Click(object sender, RoutedEventArgs e)
         {
-            stopServer = false;
             _game = " -game " + games[gameList.SelectedIndex].ShortName;
             _map = " +map " + mapsList.SelectionBoxItem;
             _maxPlayers = " +maxplayers " + maxPlayers.Text;
+            _localIP = localip_TextBox.Text.Length > 0 ? " +ip " + localip_TextBox.Text : "";
             _port = " +port " + port.Text;
             _vac = secureVAC.IsChecked == true ? "" : " -insecure ";
+            _bots = enableBots.IsEnabled && enableBots.IsChecked == true ? " -bots " : "";
 
             // If selected map is "Random Map", choose a map randomly.
             if (mapsList.SelectedIndex == 0)
@@ -343,8 +424,12 @@ namespace HLDS_Launcher
             {
                 RandomMapCycle();
             }
+            else
+            {
+                _mapcyclefile = "";
+            }
             // Check if Launcher should write to log.
-            if (autoRestart.IsChecked == true && enableLog.IsChecked == true)
+            if (enableLog.IsChecked == true)
             {
                 writeLog = true;
             }
@@ -364,8 +449,12 @@ namespace HLDS_Launcher
                 maxPlayers.IsEnabled = false;
                 port.IsEnabled = false;
                 secureVAC.IsEnabled = false;
+                enableBots.IsEnabled = false;
                 autoRestart.IsEnabled = false;
                 enableLog.IsEnabled = false;
+                randomMapcycle.IsEnabled = false;
+                localip_TextBox.IsEnabled = false;
+                priorityList.IsEnabled = false;
 
                 buttonStart.IsEnabled = false;
                 buttonStart.Visibility = Visibility.Hidden;
@@ -385,7 +474,7 @@ namespace HLDS_Launcher
             if (MessageBox.Show("Do you want to stop the server?", "Stop server", MessageBoxButton.YesNo, MessageBoxImage.Question) ==
                 MessageBoxResult.Yes)
             {
-                StopServer();
+                StopServer();                
                 hlds.CloseMainWindow();
                 hlds.Close();
                 hlds.Refresh();
@@ -396,6 +485,21 @@ namespace HLDS_Launcher
         private void ButtonExit_Click(object sender, RoutedEventArgs e)
         {
             ExitApplication();
+        }
+
+        // Button edit mapcycle.txt
+        private void ButtonEditMapcycle_Click(object sender, RoutedEventArgs e)
+        {
+            string serverFilePath = ".\\" + games[gameList.SelectedIndex].ShortName + "\\mapcycle.txt";
+            if (File.Exists(serverFilePath))
+            {
+                Process.Start(serverFilePath);
+            }
+            else
+            {
+                System.Windows.MessageBox.Show("File \"mapcycle.txt\" not found in path: " + serverFilePath, "HLDS Launcher", MessageBoxButton.OK,
+                    MessageBoxImage.Asterisk);
+            }
         }
     }
 }

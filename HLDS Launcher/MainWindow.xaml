@@ -5,37 +5,44 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:HLDS_Launcher"
         mc:Ignorable="d"
-        Title="HLDS Launcher" Height="425.5" Width="342" ResizeMode="CanMinimize" WindowStartupLocation="CenterScreen" Icon="Images/launcher_1F4_icon.ico">
+        Title="HLDS Launcher" Height="317.5" Width="509" ResizeMode="CanMinimize" WindowStartupLocation="CenterScreen" Icon="Images/launcher_1F4_icon.ico">
     <Grid Background="#FF495743">
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="158*"/>
-            <ColumnDefinition Width="179*"/>
+            <ColumnDefinition/>
         </Grid.ColumnDefinitions>
-        <ComboBox x:Name="gameList" HorizontalAlignment="Left" Margin="113,13,0,0" VerticalAlignment="Top" Width="205" FontSize="14" SelectionChanged="GameList_SelectionChanged" SelectedIndex="0" Grid.ColumnSpan="2"/>
+        <ComboBox x:Name="gameList" HorizontalAlignment="Left" Margin="113,13,0,0" VerticalAlignment="Top" Width="205" FontSize="14" SelectionChanged="GameList_SelectionChanged" SelectedIndex="0" Height="25" ToolTip="Specifies which game/mod to run."/>
         <TextBlock HorizontalAlignment="Left" Margin="13,13,0,0" TextWrapping="Wrap" Text="Game" VerticalAlignment="Top" Height="22" Width="95" TextAlignment="Right" FontSize="16" Foreground="#FFDEDEDE"/>
-        <ComboBox x:Name="mapsList" HorizontalAlignment="Left" Margin="113,52,0,0" VerticalAlignment="Top" Width="205" FontSize="14" Grid.ColumnSpan="2"/>
+        <ComboBox x:Name="mapsList" HorizontalAlignment="Left" Margin="113,52,0,0" VerticalAlignment="Top" Width="205" FontSize="14" Height="25" ToolTip="Specifies which map to start with."/>
         <TextBlock HorizontalAlignment="Left" Margin="13,52,0,0" TextWrapping="Wrap" Text="Map" VerticalAlignment="Top" Height="22" Width="95" TextAlignment="Right" FontSize="16" Foreground="#FFDEDEDE"/>
         <TextBlock HorizontalAlignment="Left" Margin="13,91,0,0" TextWrapping="Wrap" Text="Max Players" VerticalAlignment="Top" Height="22" Width="95" TextAlignment="Right" FontSize="16" Foreground="#FFDEDEDE"/>
-        <TextBox x:Name="maxPlayers" HorizontalAlignment="Left" Height="22" Margin="113,91,0,0" Text="32" VerticalAlignment="Top" Width="48" FontSize="14" MaxLength="2" MaxLines="1" PreviewKeyDown="TextOnlyNumbers" PreviewTextInput="TextInputOnlyNumbers" TextChanged="MaxPlayers_TextChanged" Grid.ColumnSpan="2"/>
-        <TextBlock HorizontalAlignment="Left" Margin="13,127,0,0" TextWrapping="Wrap" Text="UDP Port" VerticalAlignment="Top" Height="22" Width="95" TextAlignment="Right" FontSize="16" Foreground="#FFDEDEDE"/>
-        <TextBox x:Name="port" HorizontalAlignment="Left" Height="22" Margin="113,127,0,0" Text="27015" VerticalAlignment="Top" Width="48" FontSize="14" MaxLength="5" MaxLines="1" PreviewKeyDown="TextOnlyNumbers" PreviewTextInput="TextInputOnlyNumbers" Grid.ColumnSpan="2"/>
-        <CheckBox x:Name="secureVAC" Content="Enable VAC (Valve Anti-Cheat)" HorizontalAlignment="Left" Margin="113,225.893,0,0" VerticalAlignment="Top" FontSize="14" Foreground="#FFDEDEDE" IsChecked="True" Grid.ColumnSpan="2"/>
-        <Button x:Name="buttonStart" Content="Start" HorizontalAlignment="Left" Margin="113,354.893,0,0" VerticalAlignment="Top" Width="75" FontSize="14" Click="ButtonStart_Click" Grid.ColumnSpan="2"/>
-        <Button x:Name="buttonExit" Content="Exit" HorizontalAlignment="Left" Margin="56.5,354.893,0,0" VerticalAlignment="Top" Width="75" FontSize="14" Click="ButtonExit_Click" Grid.Column="1"/>
-        <Button x:Name="buttonEditServerCFG" Content="Edit Server.cfg" HorizontalAlignment="Left" Margin="30.5,254.893,0,0" VerticalAlignment="Top" Width="101" FontSize="14" Click="ButtonEditServerCFG_Click" Grid.Column="1"/>
-        <Button x:Name="buttonGetIP" Content="Get public IP" HorizontalAlignment="Left" Margin="60,254.893,0,0" VerticalAlignment="Top" Width="101" FontSize="14" Click="ButtonGetIP_Click" Grid.ColumnSpan="2"/>
-        <CheckBox x:Name="autoRestart" Content="Restart server after exit/crash." HorizontalAlignment="Left" Margin="113,292.893,0,0" VerticalAlignment="Top" FontSize="14" Foreground="#FFDEDEDE" Checked="AutoRestart_Checked" Unchecked="AutoRestart_Checked" Grid.ColumnSpan="2"/>
-        <Button x:Name="buttonStop" Content="Stop" HorizontalAlignment="Left" Margin="113,354.893,0,0" VerticalAlignment="Top" Width="75" FontSize="14" Click="ButtonStop_Click" IsEnabled="False" Grid.ColumnSpan="2" Visibility="Hidden"/>
-        <ComboBox x:Name="priorityList" HorizontalAlignment="Left" Margin="113,163,0,0" VerticalAlignment="Top" Width="124" FontSize="14" SelectionChanged="GameList_SelectionChanged" SelectedIndex="0" Grid.ColumnSpan="2">
+        <TextBox x:Name="maxPlayers" HorizontalAlignment="Left" Height="22" Margin="113,91,0,0" Text="32" VerticalAlignment="Top" Width="48" FontSize="14" MaxLength="2" MaxLines="1" PreviewKeyDown="TextOnlyNumbers" PreviewTextInput="TextInputOnlyNumbers" TextChanged="MaxPlayers_TextChanged" ToolTip="Sets the maximum number of players that will be able to join your server."/>
+        <TextBlock HorizontalAlignment="Left" Margin="13,164.444,0,0" TextWrapping="Wrap" Text="UDP Port" VerticalAlignment="Top" Height="22" Width="95" TextAlignment="Right" FontSize="16" Foreground="#FFDEDEDE"/>
+        <TextBox x:Name="port" HorizontalAlignment="Left" Height="22" Margin="113,164.444,0,0" Text="27015" VerticalAlignment="Top" Width="48" FontSize="14" MaxLength="5" MaxLines="1" PreviewKeyDown="TextOnlyNumbers" PreviewTextInput="TextInputOnlyNumbers" ToolTip="Specifies which port to use for client connections. Default is 27015."/>
+        <CheckBox x:Name="secureVAC" Content="Enable VAC (Valve Anti-Cheat)" HorizontalAlignment="Left" Margin="270,140.658,0,0" VerticalAlignment="Top" FontSize="14" Foreground="#FFDEDEDE" IsChecked="True" Height="18" Width="205"/>
+        <Button x:Name="buttonStart" Content="Start" HorizontalAlignment="Left" Margin="326,249.786,0,0" VerticalAlignment="Top" Width="75" FontSize="14" Click="ButtonStart_Click" Height="23"/>
+        <Button x:Name="buttonExit" Content="Exit" HorizontalAlignment="Left" Margin="418,249.786,0,0" VerticalAlignment="Top" Width="75" FontSize="14" Click="ButtonExit_Click" Height="23"/>
+        <Button x:Name="buttonEditServerCFG" Content="Edit Server.cfg" HorizontalAlignment="Left" Margin="46,249.629,0,0" VerticalAlignment="Top" Width="101" FontSize="14" Click="ButtonEditServerCFG_Click" Height="23.157" Padding="0"/>
+        <CheckBox x:Name="autoRestart" Content="Restart server after crash." HorizontalAlignment="Left" Margin="270,185.551,0,0" VerticalAlignment="Top" FontSize="14" Foreground="#FFDEDEDE" Height="18" Width="202"/>
+        <Button x:Name="buttonStop" Content="Stop" HorizontalAlignment="Left" Margin="326,249.786,0,0" VerticalAlignment="Top" Width="75" FontSize="14" Click="ButtonStop_Click" IsEnabled="False" Height="23" Visibility="Hidden"/>
+        <ComboBox x:Name="priorityList" HorizontalAlignment="Left" Margin="113,200.551,0,0" VerticalAlignment="Top" Width="124" FontSize="14" SelectionChanged="GameList_SelectionChanged" SelectedIndex="0" Height="25" ToolTip="Process priority.">
             <ComboBoxItem Content="Normal"/>
             <ComboBoxItem Content="Above Normal"/>
             <ComboBoxItem Content="High"/>
             <ComboBoxItem Content="Realtime"/>
         </ComboBox>
-        <TextBlock HorizontalAlignment="Left" Margin="13,163,0,0" TextWrapping="Wrap" Text="Priority" VerticalAlignment="Top" Height="22" Width="95" TextAlignment="Right" FontSize="16" Foreground="#FFDEDEDE"/>
-        <CheckBox x:Name="enableLog" Content="Enable Launcher Logging" HorizontalAlignment="Left" Margin="139,320.893,0,0" VerticalAlignment="Top" FontSize="14" Foreground="#FFDEDEDE" Grid.ColumnSpan="2"/>
-        <CheckBox x:Name="randomMapcycle" Content="Random Mapcycle" HorizontalAlignment="Left" Margin="113,202.893,0,0" VerticalAlignment="Top" Grid.ColumnSpan="2" Width="202" FontSize="14" Foreground="#FFDEDEDE" ToolTip="Randomize the game's mapcycle file."/>
-        <TextBlock HorizontalAlignment="Left" Margin="8,380.393,0,0" TextWrapping="Wrap" Text="v 1.1" VerticalAlignment="Top" Foreground="#FF8D8B8B" FontSize="9"/>
+        <TextBlock HorizontalAlignment="Left" Margin="13,201.391,0,0" TextWrapping="Wrap" Text="Priority" VerticalAlignment="Top" Height="22" Width="95" TextAlignment="Right" FontSize="16" Foreground="#FFDEDEDE"/>
+        <CheckBox x:Name="enableLog" Content="Enable Launcher log" HorizontalAlignment="Left" Margin="270,208.551,0,0" VerticalAlignment="Top" FontSize="14" Foreground="#FFDEDEDE" Height="18" Width="176"/>
+        <CheckBox x:Name="randomMapcycle" Content="Random Mapcycle" HorizontalAlignment="Left" Margin="270,162.551,0,0" VerticalAlignment="Top" Width="202" FontSize="14" Foreground="#FFDEDEDE" ToolTip="Randomize the game's mapcycle file." Height="18"/>
+        <TextBlock HorizontalAlignment="Left" Margin="8,0,0,8" TextWrapping="Wrap" Text="v 1.2" VerticalAlignment="Bottom" Foreground="#FF8D8B8B" FontSize="9" Height="12" Width="24"/>
+        <CheckBox x:Name="enableBots" Content="Bots (ReGame)" HorizontalAlignment="Left" Margin="270,117.658,0,0" VerticalAlignment="Top" Foreground="#FFDEDEDE" FontSize="14" Width="119.5" ToolTip="Enable bots (Only for ReGame.dll)"/>
+        <TextBlock HorizontalAlignment="Left" Margin="46,127,0,0" TextWrapping="Wrap" Text="Local IP" VerticalAlignment="Top" Height="22" Width="62" TextAlignment="Right" FontSize="16" Foreground="#FFDEDEDE"/>
+        <TextBox x:Name="localip_TextBox" HorizontalAlignment="Left" Height="22" Margin="113,127,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="110" FontSize="14" ToolTip="Specifies the IP when multiple network cards are installed. Required for VAC2 operation."/>
+        <Grid HorizontalAlignment="Left" Height="72.56" Margin="348.667,10,0,0" VerticalAlignment="Top" Width="129">
+            <Button x:Name="buttonGetIP" Content="Refresh" HorizontalAlignment="Center" Margin="33,48,33,0" VerticalAlignment="Top" Width="63" FontSize="14" Click="ButtonGetIP_Click" Height="23"/>
+            <TextBlock HorizontalAlignment="Left" TextWrapping="Wrap" Text="Public IP:" VerticalAlignment="Top" Foreground="#FFDEDEDE" FontSize="16" Width="129" TextAlignment="Center"/>
+            <TextBox x:Name="publicIP_Text" HorizontalAlignment="Left" Height="23" Margin="0,21,0,0" TextWrapping="Wrap" Text="---" VerticalAlignment="Top" Width="129" IsReadOnly="True" MaxLines="1" FontSize="16" Background="{x:Null}" BorderBrush="{x:Null}" Foreground="#FFDEDEDE" TextAlignment="Center" BorderThickness="0"/>
+        </Grid>
+        <Button x:Name="buttonEditMapcycle" Content="Edit mapcycle.txt" HorizontalAlignment="Left" Margin="152,249.786,0,0" VerticalAlignment="Top" Width="114.5" Height="23" FontSize="14" Click="ButtonEditMapcycle_Click" VerticalContentAlignment="Center" Padding="0"/>
 
     </Grid>
 </Window>
