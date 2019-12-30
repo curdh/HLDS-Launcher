@@ -11,6 +11,7 @@ This launcher is aimed to make running a dedicated server easier and at the best
 - Check the current public IP of the hosting machine.
 - Open the server.cfg file for easy and quick edition.
 - Restart server after exit/crash automatically with option to log events.
+- Compatible with ReGame.dll bots.
 
 # Installation
 Simply copy "HLDS Launcher.exe" to the server folder and start hosting!.
