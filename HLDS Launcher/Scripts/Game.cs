@@ -27,7 +27,20 @@ namespace HLDS_Launcher.Scripts
             }
         }
 
-        public void LoadMaps()
+        public void LoadMaps(bool loadFromFolder)
+        {
+            Maps.Clear();
+            if (loadFromFolder == true)
+            {
+                GetMapsFromFolder();
+            }
+            else
+            {
+                GetMapsFromMapcycle();
+            }
+        }
+
+        private void GetMapsFromFolder()
         {
             if (Directory.Exists(".\\" + ShortName + "\\maps"))
             {
@@ -59,7 +72,32 @@ namespace HLDS_Launcher.Scripts
                     Maps.Add(mapName);
                 }
                 Maps.Sort();
-                Maps.Insert(0, "Random Map");
+                Maps.Insert(0, "<Random Map>");
+            }
+        }
+
+        private void GetMapsFromMapcycle()
+        {
+            if (File.Exists(".\\" + ShortName + "\\mapcycle.txt"))
+            {
+                StreamReader sr = new StreamReader(".\\" + ShortName + "\\mapcycle.txt");
+                string line;
+                while (!sr.EndOfStream)
+                {
+                    line = sr.ReadLine();
+
+                    if (line.Length > 0 && !line.StartsWith("//") && !line.StartsWith("\\") && !line.StartsWith(";"))
+                    {
+                        Maps.Add(line);
+                    }
+                }
+                Maps.Sort();
+                Maps.Insert(0, "<Random Map>");
+            }
+            else
+            {
+                // If mapcycle.txt doesn't exists, get maps from maps folder instead.
+                GetMapsFromFolder();
             }
         }
     }

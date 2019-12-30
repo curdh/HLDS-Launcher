@@ -54,6 +54,7 @@
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Data" />
+    <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml" />
     <Reference Include="WindowsBase" />
     <Reference Include="PresentationCore" />
@@ -64,8 +65,22 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="AboutWindow.xaml.cs">
+      <DependentUpon>AboutWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="MessageDialog.xaml.cs">
+      <DependentUpon>MessageDialog.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Scripts\Game.cs" />
     <Compile Include="Settings.cs" />
+    <Page Include="AboutWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="HLDS_Style.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -78,6 +93,10 @@
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Page Include="MessageDialog.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs">
@@ -112,6 +131,45 @@
       <ProductName>.NET Framework 3.5 SP1</ProductName>
       <Install>true</Install>
     </BootstrapperPackage>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\appbar.arrow.right.left.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\appbar.cog.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\appbar.folder.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\appbar.page.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\appbar.refresh.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\license.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\appbar.close.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\appbar.minus.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\appbar.stop.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\appbar.warning.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\appbar.new.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\88x31.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Readme.txt" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

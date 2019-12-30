@@ -26,9 +26,9 @@ namespace HLDS_Launcher.Properties {
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("32")]
-        public string maxPlayers {
+        public int maxPlayers {
             get {
-                return ((string)(this["maxPlayers"]));
+                return ((int)(this["maxPlayers"]));
             }
             set {
                 this["maxPlayers"] = value;
@@ -152,6 +152,54 @@ namespace HLDS_Launcher.Properties {
             }
             set {
                 this["localIP"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string svPassword {
+            get {
+                return ((string)(this["svPassword"]));
+            }
+            set {
+                this["svPassword"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string rconPassword {
+            get {
+                return ((string)(this["rconPassword"]));
+            }
+            set {
+                this["rconPassword"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("True")]
+        public bool loadMapsFromFolder {
+            get {
+                return ((bool)(this["loadMapsFromFolder"]));
+            }
+            set {
+                this["loadMapsFromFolder"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("0")]
+        public int serverLaunchOptionsList {
+            get {
+                return ((int)(this["serverLaunchOptionsList"]));
+            }
+            set {
+                this["serverLaunchOptionsList"] = value;
             }
         }
     }

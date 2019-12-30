@@ -5,44 +5,173 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:HLDS_Launcher"
         mc:Ignorable="d"
-        Title="HLDS Launcher" Height="317.5" Width="509" ResizeMode="CanMinimize" WindowStartupLocation="CenterScreen" Icon="Images/launcher_1F4_icon.ico">
-    <Grid Background="#FF495743">
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition/>
-        </Grid.ColumnDefinitions>
-        <ComboBox x:Name="gameList" HorizontalAlignment="Left" Margin="113,13,0,0" VerticalAlignment="Top" Width="205" FontSize="14" SelectionChanged="GameList_SelectionChanged" SelectedIndex="0" Height="25" ToolTip="Specifies which game/mod to run."/>
-        <TextBlock HorizontalAlignment="Left" Margin="13,13,0,0" TextWrapping="Wrap" Text="Game" VerticalAlignment="Top" Height="22" Width="95" TextAlignment="Right" FontSize="16" Foreground="#FFDEDEDE"/>
-        <ComboBox x:Name="mapsList" HorizontalAlignment="Left" Margin="113,52,0,0" VerticalAlignment="Top" Width="205" FontSize="14" Height="25" ToolTip="Specifies which map to start with."/>
-        <TextBlock HorizontalAlignment="Left" Margin="13,52,0,0" TextWrapping="Wrap" Text="Map" VerticalAlignment="Top" Height="22" Width="95" TextAlignment="Right" FontSize="16" Foreground="#FFDEDEDE"/>
-        <TextBlock HorizontalAlignment="Left" Margin="13,91,0,0" TextWrapping="Wrap" Text="Max Players" VerticalAlignment="Top" Height="22" Width="95" TextAlignment="Right" FontSize="16" Foreground="#FFDEDEDE"/>
-        <TextBox x:Name="maxPlayers" HorizontalAlignment="Left" Height="22" Margin="113,91,0,0" Text="32" VerticalAlignment="Top" Width="48" FontSize="14" MaxLength="2" MaxLines="1" PreviewKeyDown="TextOnlyNumbers" PreviewTextInput="TextInputOnlyNumbers" TextChanged="MaxPlayers_TextChanged" ToolTip="Sets the maximum number of players that will be able to join your server."/>
-        <TextBlock HorizontalAlignment="Left" Margin="13,164.444,0,0" TextWrapping="Wrap" Text="UDP Port" VerticalAlignment="Top" Height="22" Width="95" TextAlignment="Right" FontSize="16" Foreground="#FFDEDEDE"/>
-        <TextBox x:Name="port" HorizontalAlignment="Left" Height="22" Margin="113,164.444,0,0" Text="27015" VerticalAlignment="Top" Width="48" FontSize="14" MaxLength="5" MaxLines="1" PreviewKeyDown="TextOnlyNumbers" PreviewTextInput="TextInputOnlyNumbers" ToolTip="Specifies which port to use for client connections. Default is 27015."/>
-        <CheckBox x:Name="secureVAC" Content="Enable VAC (Valve Anti-Cheat)" HorizontalAlignment="Left" Margin="270,140.658,0,0" VerticalAlignment="Top" FontSize="14" Foreground="#FFDEDEDE" IsChecked="True" Height="18" Width="205"/>
-        <Button x:Name="buttonStart" Content="Start" HorizontalAlignment="Left" Margin="326,249.786,0,0" VerticalAlignment="Top" Width="75" FontSize="14" Click="ButtonStart_Click" Height="23"/>
-        <Button x:Name="buttonExit" Content="Exit" HorizontalAlignment="Left" Margin="418,249.786,0,0" VerticalAlignment="Top" Width="75" FontSize="14" Click="ButtonExit_Click" Height="23"/>
-        <Button x:Name="buttonEditServerCFG" Content="Edit Server.cfg" HorizontalAlignment="Left" Margin="46,249.629,0,0" VerticalAlignment="Top" Width="101" FontSize="14" Click="ButtonEditServerCFG_Click" Height="23.157" Padding="0"/>
-        <CheckBox x:Name="autoRestart" Content="Restart server after crash." HorizontalAlignment="Left" Margin="270,185.551,0,0" VerticalAlignment="Top" FontSize="14" Foreground="#FFDEDEDE" Height="18" Width="202"/>
-        <Button x:Name="buttonStop" Content="Stop" HorizontalAlignment="Left" Margin="326,249.786,0,0" VerticalAlignment="Top" Width="75" FontSize="14" Click="ButtonStop_Click" IsEnabled="False" Height="23" Visibility="Hidden"/>
-        <ComboBox x:Name="priorityList" HorizontalAlignment="Left" Margin="113,200.551,0,0" VerticalAlignment="Top" Width="124" FontSize="14" SelectionChanged="GameList_SelectionChanged" SelectedIndex="0" Height="25" ToolTip="Process priority.">
-            <ComboBoxItem Content="Normal"/>
-            <ComboBoxItem Content="Above Normal"/>
-            <ComboBoxItem Content="High"/>
-            <ComboBoxItem Content="Realtime"/>
-        </ComboBox>
-        <TextBlock HorizontalAlignment="Left" Margin="13,201.391,0,0" TextWrapping="Wrap" Text="Priority" VerticalAlignment="Top" Height="22" Width="95" TextAlignment="Right" FontSize="16" Foreground="#FFDEDEDE"/>
-        <CheckBox x:Name="enableLog" Content="Enable Launcher log" HorizontalAlignment="Left" Margin="270,208.551,0,0" VerticalAlignment="Top" FontSize="14" Foreground="#FFDEDEDE" Height="18" Width="176"/>
-        <CheckBox x:Name="randomMapcycle" Content="Random Mapcycle" HorizontalAlignment="Left" Margin="270,162.551,0,0" VerticalAlignment="Top" Width="202" FontSize="14" Foreground="#FFDEDEDE" ToolTip="Randomize the game's mapcycle file." Height="18"/>
-        <TextBlock HorizontalAlignment="Left" Margin="8,0,0,8" TextWrapping="Wrap" Text="v 1.2" VerticalAlignment="Bottom" Foreground="#FF8D8B8B" FontSize="9" Height="12" Width="24"/>
-        <CheckBox x:Name="enableBots" Content="Bots (ReGame)" HorizontalAlignment="Left" Margin="270,117.658,0,0" VerticalAlignment="Top" Foreground="#FFDEDEDE" FontSize="14" Width="119.5" ToolTip="Enable bots (Only for ReGame.dll)"/>
-        <TextBlock HorizontalAlignment="Left" Margin="46,127,0,0" TextWrapping="Wrap" Text="Local IP" VerticalAlignment="Top" Height="22" Width="62" TextAlignment="Right" FontSize="16" Foreground="#FFDEDEDE"/>
-        <TextBox x:Name="localip_TextBox" HorizontalAlignment="Left" Height="22" Margin="113,127,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="110" FontSize="14" ToolTip="Specifies the IP when multiple network cards are installed. Required for VAC2 operation."/>
-        <Grid HorizontalAlignment="Left" Height="72.56" Margin="348.667,10,0,0" VerticalAlignment="Top" Width="129">
-            <Button x:Name="buttonGetIP" Content="Refresh" HorizontalAlignment="Center" Margin="33,48,33,0" VerticalAlignment="Top" Width="63" FontSize="14" Click="ButtonGetIP_Click" Height="23"/>
-            <TextBlock HorizontalAlignment="Left" TextWrapping="Wrap" Text="Public IP:" VerticalAlignment="Top" Foreground="#FFDEDEDE" FontSize="16" Width="129" TextAlignment="Center"/>
-            <TextBox x:Name="publicIP_Text" HorizontalAlignment="Left" Height="23" Margin="0,21,0,0" TextWrapping="Wrap" Text="---" VerticalAlignment="Top" Width="129" IsReadOnly="True" MaxLines="1" FontSize="16" Background="{x:Null}" BorderBrush="{x:Null}" Foreground="#FFDEDEDE" TextAlignment="Center" BorderThickness="0"/>
+        Title="HLDS Launcher" Background="Gray" Height="387.5" Width="647" ResizeMode="CanMinimize" WindowStartupLocation="CenterScreen" Icon="Images/launcher_1F4_icon.ico" WindowStyle="None">
+    <Window.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="HLDS_Style.xaml"/>
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </Window.Resources>
+    <Grid Background="#FF4C5844" Margin="1">
+        <Grid x:Name="grid_TitleBar" Margin="0" Height="30" VerticalAlignment="Top" MouseDown="Grid_TitleBar_MouseDown" Background="#FF4C5844">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="30"/>
+                <ColumnDefinition/>
+                <ColumnDefinition Width="35"/>
+                <ColumnDefinition Width="28"/>
+            </Grid.ColumnDefinitions>
+            <Image Grid.Column="0" HorizontalAlignment="Left" Height="20" Margin="5,0,0,0" VerticalAlignment="Center" Width="20" Source="Images/launcher_1F4_icon.ico"/>
+            <TextBlock x:Name="windowTitle" Grid.Column="1" Margin="0" TextWrapping="Wrap" Text="HLDS Launcher" VerticalAlignment="Center" FontSize="14" HorizontalAlignment="Left" Foreground="#FFD8DED3"/>
+            <Button x:Name="button_MinimizeWindow" Grid.Column="2" HorizontalAlignment="Right" Margin="0" Width="22" Height="22" Focusable="False" FontWeight="Bold" BorderThickness="0" Click="ButtonMinimizeWindow" ScrollViewer.VerticalScrollBarVisibility="Disabled" Background="{x:Null}" VerticalAlignment="Center">
+                <Image Source="Images/appbar.minus.png" Margin="0" SnapsToDevicePixels="True"/>
+            </Button>
+            <Button x:Name="button_CloseWindow" Grid.Column="3" HorizontalAlignment="Left" Margin="0" Width="22" Height="22" Focusable="False" Click="ButtonExit_Click" FontWeight="Bold" BorderThickness="0" VerticalAlignment="Center">
+                <Image Source="Images/appbar.close.png" SnapsToDevicePixels="True"/>
+            </Button>
         </Grid>
-        <Button x:Name="buttonEditMapcycle" Content="Edit mapcycle.txt" HorizontalAlignment="Left" Margin="152,249.786,0,0" VerticalAlignment="Top" Width="114.5" Height="23" FontSize="14" Click="ButtonEditMapcycle_Click" VerticalContentAlignment="Center" Padding="0"/>
-
+        <TextBlock x:Name="versionTextblock" HorizontalAlignment="Left" Margin="8,0,0,8" TextWrapping="Wrap" Text="About" VerticalAlignment="Bottom" Foreground="#FFAEAEAE" FontSize="11" Height="12" Cursor="Hand" MouseLeftButtonUp="VersionTextblock_MouseLeftButtonUp" Focusable="True"/>
+        <Grid x:Name="gridMainOptions" HorizontalAlignment="Left" Height="322" Margin="10,40,0,0" VerticalAlignment="Top" Width="355">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="114"/>
+                <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="39"/>
+                <RowDefinition Height="39"/>
+                <RowDefinition Height="39"/>
+                <RowDefinition Height="39"/>
+                <RowDefinition Height="39"/>
+                <RowDefinition Height="39"/>
+                <RowDefinition Height="39"/>
+                <RowDefinition Height="39"/>
+            </Grid.RowDefinitions>
+            <Grid Grid.Column="0" Grid.Row="0" Margin="0">
+                <TextBlock Margin="0" TextWrapping="Wrap" Text="Game" TextAlignment="Right" FontSize="16" Foreground="#FFD8DED3" Height="25"/>
+            </Grid>
+            <Grid Grid.Column="0" Grid.Row="1" Margin="0">
+                <TextBlock Margin="0" TextWrapping="Wrap" Text="Map" TextAlignment="Right" FontSize="16" Foreground="#FFD8DED3" Height="25"/>
+            </Grid>
+            <Grid Grid.Column="0" Grid.Row="2" Margin="0">
+                <TextBlock Margin="0" TextWrapping="Wrap" Text="Max Players" TextAlignment="Right" FontSize="16" Foreground="#FFD8DED3" Height="25"/>
+            </Grid>
+            <Grid Grid.Column="0" Grid.Row="3" Margin="0">
+                <TextBlock Margin="0" TextWrapping="Wrap" Text="Password" TextAlignment="Right" FontSize="16" Foreground="#FFD8DED3" Height="25"/>
+            </Grid>
+            <Grid Grid.Column="0" Grid.Row="4" Margin="0">
+                <TextBlock Margin="0" TextWrapping="Wrap" Text="RCON Password" FontSize="16" Foreground="#FFD8DED3" TextAlignment="Right" Height="25"/>
+            </Grid>
+            <Grid Grid.Column="0" Grid.Row="5" Margin="0">
+                <TextBlock Margin="0" TextWrapping="Wrap" Text="IP" TextAlignment="Right" FontSize="16" Foreground="#FFD8DED3" Height="25"/>
+            </Grid>
+            <Grid Grid.Column="0" Grid.Row="6" Margin="0">
+                <TextBlock Margin="0" TextWrapping="Wrap" Text="UDP Port" TextAlignment="Right" FontSize="16" Foreground="#FFD8DED3" Height="25"/>
+            </Grid>
+            <Grid Grid.Column="0" Grid.Row="7" Margin="0">
+                <TextBlock Margin="0" TextWrapping="Wrap" Text="Priority" TextAlignment="Right" FontSize="16" Foreground="#FFD8DED3" Height="25"/>
+            </Grid>
+            <Grid Grid.Column="1" Grid.Row="0" Margin="0">
+                <ComboBox x:Name="gameList" HorizontalAlignment="Left" Margin="5,0,0,0" VerticalAlignment="Center" Width="205" FontSize="14" SelectionChanged="GameList_SelectionChanged" SelectedIndex="0" Height="25" ToolTip="Specifies which game/mod to run."/>
+                <Button x:Name="buttonOpenGameFolder" Grid.Column="0" HorizontalAlignment="Left" Margin="215,0,0,0" VerticalAlignment="Center" Width="25" Height="25" Click="ButtonOpenGameFolder_Click" ToolTip="Open game folder." Padding="1">
+                    <Image Source="Images/appbar.folder.png" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="3" Height="24" Width="24" Opacity="0.8" SnapsToDevicePixels="True"/>
+                </Button>
+            </Grid>
+            <Grid Grid.Column="1" Grid.Row="1" Margin="0">
+                <ComboBox x:Name="mapsList" HorizontalAlignment="Left" Margin="5,0,0,0" VerticalAlignment="Center" Width="205" FontSize="14" Height="25" ToolTip="Specifies which map to start with." ScrollViewer.HorizontalScrollBarVisibility="Disabled" ScrollViewer.VerticalScrollBarVisibility="Auto"/>
+                <Button x:Name="buttonToggleMapsSource" HorizontalAlignment="Left" Margin="215,0,0,0" VerticalAlignment="Center" Width="25" Height="25" Click="ButtonToggleMapsSource_Click" HorizontalContentAlignment="Center" VerticalContentAlignment="Center">
+                    <Image x:Name="imageFront" Source="Images/appbar.arrow.right.left.png" Margin="3" HorizontalAlignment="Center" VerticalAlignment="Center" Opacity="0.8" SnapsToDevicePixels="True" Height="20" Width="20"/>
+                </Button>
+                <TextBlock x:Name="textblockMapsSource" HorizontalAlignment="Left" Margin="9,-5.917,0,32" TextWrapping="Wrap" Text="Showing maps from folder" VerticalAlignment="Center" Width="201" FontSize="10" Foreground="#FFA0AA95" Height="13.917"/>
+            </Grid>
+            <Grid Grid.Column="1" Grid.Row="2" Margin="0">
+                <ComboBox x:Name="maxPlayersList" HorizontalAlignment="Left" Margin="5,7.5,0,7.5" VerticalAlignment="Center" Width="80" Height="25"/>
+            </Grid>
+            <Grid Grid.Column="1" Grid.Row="3" Margin="0">
+                <TextBox x:Name="svPassword_Textbox" HorizontalAlignment="Left" Height="25" Margin="5,0,0,0" VerticalAlignment="Center" Width="205" FontSize="14" VerticalContentAlignment="Center" MaxLines="1" Padding="0" ToolTip="Specifies a password players must enter in order to play on your server."/>
+            </Grid>
+            <Grid Grid.Column="1" Grid.Row="4" Margin="0">
+                <TextBox x:Name="rconPassword_Textbox" HorizontalAlignment="Left" Height="25" Margin="5,0,0,0" VerticalAlignment="Center" Width="205" FontSize="14" VerticalContentAlignment="Center" Padding="0" MaxLines="1" ToolTip="Set a password for remote access to the server." TextChanged="TextChanged_OnlyAlphanumeric"/>
+                <Button x:Name="buttonRandomRCON" HorizontalAlignment="Left" Margin="215,0,0,0" VerticalAlignment="Center" Width="25" Height="25" ToolTip="Generate random RCON password." HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Padding="0" Click="ButtonRandomRCON_Click">
+                    <Image Source="Images/appbar.new.png" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="2" Opacity="0.8" SnapsToDevicePixels="True" Width="20" Height="20"/>
+                </Button>
+            </Grid>
+            <Grid Grid.Column="1" Grid.Row="5" Margin="0">
+                <TextBox x:Name="ip_TextBox" HorizontalAlignment="Left" Height="25" Margin="5,0,0,0" VerticalAlignment="Center" Width="124" FontSize="14" ToolTip="Specifies the IP when multiple network cards are installed. Required for VAC2 operation." VerticalContentAlignment="Center" MaxLines="1" Padding="0" TextChanged="TextChanged_OnlyIP" MaxLength="15" BorderThickness="1"/>
+            </Grid>
+            <Grid Grid.Column="1" Grid.Row="6" Margin="0">
+                <TextBox x:Name="port" HorizontalAlignment="Left" Height="25" Margin="5,0,0,0" Text="27015" VerticalAlignment="Center" Width="48" FontSize="14" MaxLength="5" MaxLines="1" ToolTip="Specifies which port to use for client connections. Default is 27015." VerticalContentAlignment="Center" TextChanged="TextChanged_OnlyNumbers"/>
+            </Grid>
+            <Grid Grid.Column="1" Grid.Row="7" Margin="0">
+                <ComboBox x:Name="priorityList" HorizontalAlignment="Left" Margin="5,0,0,0" VerticalAlignment="Center" Width="124" FontSize="14" SelectionChanged="GameList_SelectionChanged" SelectedIndex="0" Height="25" ToolTip="Process priority. Recommended High for HLDS." ScrollViewer.HorizontalScrollBarVisibility="Disabled" ScrollViewer.VerticalScrollBarVisibility="Auto">
+                    <ComboBoxItem Content="Normal"/>
+                    <ComboBoxItem Content="Above Normal"/>
+                    <ComboBoxItem Content="High"/>
+                    <ComboBoxItem Content="Realtime"/>
+                </ComboBox>
+            </Grid>
+        </Grid>
+        <Grid HorizontalAlignment="Left" Height="339" Margin="370,40,0,0" Width="261" VerticalAlignment="Top">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="68"/>
+                <RowDefinition Height="176"/>
+                <RowDefinition Height="67"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+            <GroupBox Grid.Row="0" Header="Public IP" HorizontalAlignment="Left" Height="60" Margin="10,0,0,0" VerticalAlignment="Top" Width="243.5" Foreground="#FFDEDEDE" BorderBrush="Gray" BorderThickness="1" SnapsToDevicePixels="True">
+                <Grid Margin="10,3" Height="25">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition/>
+                        <ColumnDefinition Width="25"/>
+                    </Grid.ColumnDefinitions>
+                    <Button Grid.Column="1" x:Name="buttonGetIP" HorizontalAlignment="Right" Margin="0" VerticalAlignment="Center" Width="25" FontSize="14" Click="ButtonGetIP_Click" Height="25" ToolTip="Refresh public IP." IsEnabled="False">
+                        <Image Source="Images/appbar.refresh.png" Margin="0" VerticalAlignment="Center" HorizontalAlignment="Center" Width="24" Height="24" SnapsToDevicePixels="True" Opacity="0.8"/>
+                    </Button>
+                    <TextBlock x:Name="publicIP_Text" HorizontalAlignment="Center" Margin="0" TextWrapping="Wrap" Text="---" VerticalAlignment="Center" FontWeight="Bold" FontSize="16" ToolTip="Click to copy." Cursor="Hand" MouseLeftButtonUp="PublicIP_Text_MouseDoubleClick" Height="25" Foreground="#FFD8DED3" IsEnabled="False"/>
+                </Grid>
+            </GroupBox>
+            <GroupBox Grid.Row="1" Header="Settings" HorizontalAlignment="Left" Height="168" Margin="10,0,0,0" VerticalAlignment="Top" Width="243.5" Foreground="#FFDEDEDE" BorderBrush="#FFD8DED3" BorderThickness="1" VerticalContentAlignment="Stretch" HorizontalContentAlignment="Right" SnapsToDevicePixels="True">
+                <Grid Height="134.663" Margin="10,5,10,0" Width="223" HorizontalAlignment="Left" VerticalAlignment="Top">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="18"/>
+                        <RowDefinition Height="18"/>
+                        <RowDefinition Height="18"/>
+                        <RowDefinition Height="18"/>
+                        <RowDefinition Height="12"/>
+                        <RowDefinition Height="18"/>
+                        <RowDefinition Height="18"/>
+                    </Grid.RowDefinitions>
+                    <CheckBox Grid.Row="0" x:Name="enableBots" Content="Enable Bots (CS 1.6)" HorizontalAlignment="Left" Margin="0,0.5" VerticalAlignment="Center" Foreground="#FFD8DED3" FontSize="14" Width="223" ToolTip="Requires Regame.dll."/>
+                    <CheckBox Grid.Row="1" x:Name="secureVAC" Content="Enable VAC (Valve Anti-Cheat)" HorizontalAlignment="Left" Margin="0" VerticalAlignment="Center" FontSize="14" Foreground="#FFD8DED3" IsChecked="True" Height="18" Width="205"/>
+                    <CheckBox Grid.Row="2" x:Name="randomMapcycle" Content="Random Mapcycle" HorizontalAlignment="Left" Margin="0" VerticalAlignment="Center" Width="202" FontSize="14" Foreground="#FFD8DED3" ToolTip="Creates a random mapcycle file before starting the server." Height="18"/>
+                    <CheckBox Grid.Row="3" x:Name="LANMode" Content="LAN Mode" HorizontalAlignment="Left" Height="18" Margin="0" VerticalAlignment="Center" Foreground="#FFD8DED3" FontSize="14" ToolTip=" If enabled, server is only available in Local Area Network (LAN)."/>
+                    <CheckBox Grid.Row="5" x:Name="autoRestart" Content="Restart server after crash." HorizontalAlignment="Left" Margin="0" VerticalAlignment="Center" FontSize="14" Foreground="#FFD8DED3" Height="18" Width="202"/>
+                    <CheckBox Grid.Row="6" x:Name="enableLog" Content="Enable Launcher log" HorizontalAlignment="Left" Margin="0,0,0,-2" VerticalAlignment="Center" FontSize="14" Foreground="#FFD8DED3" Height="18" Width="176"/>
+                </Grid>
+            </GroupBox>
+            <GroupBox Grid.Row="2" Header="At server start" BorderBrush="#FFD8DED3" Foreground="#FFDEDEDE" BorderThickness="1" Padding="10,5" Margin="10,0,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Width="243.5" SnapsToDevicePixels="True">
+                <ComboBox x:Name="serverLaunchOptionsList" Margin="10,3" VerticalAlignment="Center" Height="25" SelectedIndex="0" Padding="6,3,0,3" ToolTip="Launcher behaviour after server start." SelectionChanged="ServerLaunchOptionsList_SelectionChanged">
+                    <ComboBoxItem Content="Keep launcher open"/>
+                    <ComboBoxItem Content="Minimize"/>
+                    <ComboBoxItem Content="Close launcher"/>
+                </ComboBox>
+            </GroupBox>
+            <Grid Grid.Row="3" HorizontalAlignment="Left" Height="23" Margin="10,0,0,0" VerticalAlignment="Top" Width="253.5">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="28"/>
+                    <ColumnDefinition Width="28"/>
+                    <ColumnDefinition Width="1*"/>
+                    <ColumnDefinition Width="1*"/>
+                </Grid.ColumnDefinitions>
+                <Button Grid.Column="0" x:Name="buttonEditServerCFG" HorizontalAlignment="Left" Margin="0" VerticalAlignment="Center" Width="23" FontSize="14" Click="ButtonEditServerCFG_Click" Height="23" Padding="0" ToolTip="Open server config file.">
+                    <Image Source="Images/appbar.cog.png" Margin="0" Width="24" Height="24" HorizontalAlignment="Center" VerticalAlignment="Center" Opacity="0.8" SnapsToDevicePixels="True"/>
+                </Button>
+                <Button Grid.Column="1" x:Name="buttonEditMapcycle" HorizontalAlignment="Left" Margin="0" VerticalAlignment="Center" Width="23" Height="23" FontSize="14" Click="ButtonEditMapcycle_Click" VerticalContentAlignment="Center" Padding="0" ToolTip="Open mapcycle file.">
+                    <Image Source="Images/appbar.page.png" Margin="0" Width="24" Height="24" HorizontalAlignment="Center" VerticalAlignment="Center" Opacity="0.8" SnapsToDevicePixels="True"/>
+                </Button>
+                <Button Grid.Column="2" x:Name="buttonStart" Content="Start" HorizontalAlignment="Right" Margin="0,0,3,0" VerticalAlignment="Center" Width="75" FontSize="14" Click="ButtonStart_Click" Height="23"/>
+                <Button Grid.Column="2" x:Name="buttonStop" Content="Stop" HorizontalAlignment="Right" Margin="0,0,2.5,0" VerticalAlignment="Center" Width="75" FontSize="14" Click="ButtonStop_Click" IsEnabled="False" Height="23" Visibility="Hidden"/>
+                <Button Grid.Column="3" x:Name="buttonExit" Content="Exit" HorizontalAlignment="Right" Margin="0,0,10,0" VerticalAlignment="Center" Width="75" FontSize="14" Click="ButtonExit_Click" Height="23"/>
+            </Grid>
+        </Grid>
     </Grid>
 </Window>
