@@ -9,21 +9,19 @@ This launcher is aimed to make running a dedicated server easier and at the best
 - Option to make a random mapcycle.
 - Option to choose server process priority.
 - Check the current public IP of the hosting machine.
-- Open the server.cfg file for easy and quick edition.
-- Restart server after exit/crash automatically with option to log events.
-- Compatible with ReGame.dll bots.
+- Open server.cfg and mapcycle file directly from a button..
+- Restart server after crash automatically with option to log events.
+- Compatible with ReGame.dll bots (CS 1.6).
 
 # Installation
-Simply copy "HLDS Launcher.exe" to the server folder and start hosting!.
+Simply copy "HLDS Launcher.exe" to the server folder and start the launcher.
 (Server folder is where hlds.exe is located)
 
 # Usage
-Just select the game/mod you want to host and the starting map, set max players, UDP port (port must be forwarded if running through a router), 
-enable/disable VAC protection (Valve Anti-Cheat), set your settings and click "Start".
-If restart server after exit/crash is enabled, you must click "Stop" to close the server without restarting again.
+Just select the game/mod you want to host and the starting map, set your settings and click "Start".
 
 # Tested mods/games
-This launcher should detect every mod installed but it was tested with the following mods and worked flawlessly.
+This launcher should detect every mod installed but it was tested with the following mods and worked successfully.
 - Counter-Strike 1.6
 - Condition Zero
 - Deathmatch Classic
@@ -37,3 +35,6 @@ This launcher should detect every mod installed but it was tested with the follo
 - Team Fortress Classic
 - Half-Life Deathmatch
 - Wanted!
+
+# License
+<a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/"><img alt="Creative Commons License" style="border-width:0" src="https://i.creativecommons.org/l/by-nc-sa/4.0/88x31.png" /></a><br /><span xmlns:dct="http://purl.org/dc/terms/" property="dct:title">HLDS Launcher</span> is licensed under a <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/">Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International License</a>.
