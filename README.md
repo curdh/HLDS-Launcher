@@ -1,7 +1,7 @@
 # HLDS Launcher
 Goldsource dedicated server (HLDS) launcher.
 
-This launcher is aimed to make running a dedicated server easier and at the best performance possible.
+This launcher is aimed to help running a dedicated server easier and as simple as possible.
 
 # Features
 - Auto detect most (if not all) mods installed to half-life (See list of tested mods).
