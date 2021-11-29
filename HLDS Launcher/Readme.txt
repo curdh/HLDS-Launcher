@@ -7,8 +7,7 @@ Developed by Carlos Urdaneta.
 *********************************************************************
 * LICENSE															*
 *********************************************************************
-Commons Attribution-NonCommercial-ShareAlike 4.0 International License. 
-To view a copy of this license, visit http://creativecommons.org/licenses/by-nc-sa/4.0/.
+GNU General Public License 3.0
 
 *********************************************************************
 * FEATURES															*
